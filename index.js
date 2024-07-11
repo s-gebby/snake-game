@@ -71,7 +71,10 @@ function moveSnake() {
   const head = { x: snake[0].x + xVelocity, y: snake[0].y + yVelocity };
   snake.unshift(head);
   // if food is eaten
-  if (false) {
+  if (snake[0].x == foodX && snake[0].y == foodY) {
+    score += 1;
+    scoreText.textContent = score;
+    createFood();
   } else {
     snake.pop();
   }
@@ -84,7 +87,37 @@ function drawSnake() {
     ctx.strokeRect(snakePart.x, snakePart.y, unitSize, unitSize);
   });
 }
-function changeDirection() {}
+function changeDirection(event) {
+  const keyPressed = event.keyCode;
+  const LEFT = 37;
+  const UP = 38;
+  const RIGHT = 39;
+  const DOWN = 40;
+
+  const goingUp = yVelocity == -unitSize;
+  const goingDown = yVelocity == unitSize;
+  const goingLeft = xVelocity == -unitSize;
+  const goingRight = xVelocity == unitSize;
+
+  switch (true) {
+    case keyPressed == LEFT && !goingRight:
+      xVelocity = -unitSize;
+      yVelocity = 0;
+      break;
+    case keyPressed == UP && !goingDown:
+      xVelocity = 0;
+      yVelocity = -unitSize;
+      break;
+    case keyPressed == RIGHT && !goingLeft:
+      xVelocity = unitSize;
+      yVelocity = 0;
+      break;
+    case keyPressed == DOWN && !goingUp:
+      xVelocity = 0;
+      yVelocity = unitSize;
+      break;
+  }
+}
 function checkGameOver() {}
 function displayGameOver() {}
 function resetGame() {}
